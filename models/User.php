@@ -2,7 +2,10 @@
 
 namespace app\models;
 
+use PhpParser\Node\Expr\BinaryOp\Equal;
 use Yii;
+
+use function PHPUnit\Framework\equalTo;
 
 /**
  * This is the model class for table "user".
@@ -19,6 +22,7 @@ use Yii;
  */
 class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
+    public $passwordconfirm;
     /**
      * {@inheritdoc}
      */
@@ -33,11 +37,12 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function rules()
     {
         return [
-            [['fio', 'password', 'date_of_birth', 'tel', 'role_id'], 'required'],
+            [['fio', 'password', 'passwordconfirm', 'date_of_birth', 'tel', 'role_id'], 'required'],
             [['date_of_birth'], 'safe'],
             [['role_id'], 'integer'],
             [['fio'], 'string', 'max' => 511],
-            [['password', 'tel'], 'string', 'max' => 255],
+            [['password','passwordconfirm', 'tel'], 'string', 'max' => 255],
+            ['passwordconfirm', 'compare', 'compareAttribute' => 'password'],
             [['tel'], 'unique'],
             [['role_id'], 'exist', 'skipOnError' => true, 'targetClass' => Role::class, 'targetAttribute' => ['role_id' => 'id']],
         ];
@@ -50,10 +55,11 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         return [
             'id' => 'ID',
-            'fio' => 'Fio',
-            'password' => 'Password',
-            'date_of_birth' => 'Date Of Birth',
-            'tel' => 'Tel',
+            'fio' => 'ФИО',
+            'password' => 'Пароль',
+            'passwordconfirm' => 'Подтвердите пароль',
+            'date_of_birth' => 'Дата рождения',
+            'tel' => 'Телефон',
             'role_id' => 'Role ID',
         ];
     }
