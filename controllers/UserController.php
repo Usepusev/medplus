@@ -31,7 +31,10 @@ class UserController extends Controller
             ]
         );
     }
-
+    public function isAdmin()
+    {
+        return $this->role_id == Role::ROLE_ADMIN;
+    }
     /**
      * Lists all User models.
      *

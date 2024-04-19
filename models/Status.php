@@ -12,8 +12,13 @@ use Yii;
  *
  * @property Reception[] $receptions
  */
+
 class Status extends \yii\db\ActiveRecord
 {
+
+    const NEW_STATUS_ID = 3;
+    const APPROVED_STATUS_ID = 1;
+    const DECLINED_STATUS_ID = 2;    
     /**
      * {@inheritdoc}
      */
