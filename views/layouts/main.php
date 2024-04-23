@@ -30,32 +30,36 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 <?php $this->beginBody() ?>
 
 <header id="header">
-    <?php
+<?php
     NavBar::begin([
-        'brandLabel' => Yii::$app->name,
+        'brandLabel' => 'МедПлюс',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => ['class' => 'navbar-expand-md navbar-dark bg-dark fixed-top']
     ]);
+
+    $items = [
+        ['label' => 'Home', 'url' => ['../']],
+
+    ];
+
+    if (Yii::$app->user->isGuest) {
+        $items[] = ['label' => 'Login', 'url' => ['/site/login']];
+        $items[] = ['label' => 'Register', 'url' => ['/user/create']];
+    } else {
+        $items[] = ['label' => 'Заявка', 'url' => ['/reception/index']];
+        $items[] = '<li class="nav-item">'
+            . Html::beginForm(['/site/logout'])
+            . Html::submitButton(
+                'Logout (' . Yii::$app->user->identity->fio . ')',
+                ['class' => 'nav-link btn btn-link logout']
+            )
+            . Html::endForm()
+        . '</li>';
+    }
+
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav'],
-        'items' => [
-            ['label' => 'Главная', 'url' => ['/site/index']],
-            ['label' => 'О нас', 'url' => ['/site/about']],
-            ['label' => 'Запись', 'url' => ['/reception/index']],
-            Yii::$app->user->isGuest
-            ?['label' => 'Регистрация', 'url' => ['/site/create']]
-            :'',
-            Yii::$app->user->isGuest
-                ? ['label' => 'Вход', 'url' => ['/site/login']]
-                : '<li class="nav-item">'
-                    . Html::beginForm(['/site/logout'])
-                    . Html::submitButton(
-                        'Logout (' . Yii::$app->user->identity->fio . ')',
-                        ['class' => 'nav-link btn btn-link logout']
-                    )
-                    . Html::endForm()
-                    . '</li>'
-        ]
+        'items' => $items
     ]);
     NavBar::end();
     ?>

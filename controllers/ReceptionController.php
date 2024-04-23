@@ -19,6 +19,9 @@ class ReceptionController extends Controller
     /**
      * @inheritDoc
      */
+    public function isAdmin() {
+        return $this->role_id == Role::ROLE_ADMIN;
+    }
     public function behaviors()
     {
         return array_merge(
@@ -156,5 +159,9 @@ class ReceptionController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+    public function isAdmin()
+    {
+        return $this->role_id == Role::ROLE_ADMIN;
     }
 }

@@ -45,7 +45,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             [['password','passwordconfirm', 'tel'], 'string', 'max' => 255],
             ['passwordconfirm', 'compare', 'compareAttribute' => 'password'],
             [['tel'], 'unique'],
-            ['tel', 'match', 'pattern' => '^(\+7|7|8)[0-9]{10}$'],
+            ['tel', 'match', 'pattern' => '/^(\+7|7|8)[0-9]{10}$/'],
             [['role_id'], 'exist', 'skipOnError' => true, 'targetClass' => Role::class, 'targetAttribute' => ['role_id' => 'id']],
         ];
     }

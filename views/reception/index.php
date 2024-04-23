@@ -10,7 +10,7 @@ use yii\grid\GridView;
 /** @var app\models\ReceptionSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Receptions';
+$this->title = 'Записи';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="reception-index">

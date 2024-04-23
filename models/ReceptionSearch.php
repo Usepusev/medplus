@@ -1,7 +1,8 @@
 <?php
 
 namespace app\models;
-
+use Yii;
+use app\models\User;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Reception;
@@ -11,6 +12,7 @@ use app\models\Reception;
  */
 class ReceptionSearch extends Reception
 {
+    
     /**
      * {@inheritdoc}
      */
@@ -40,7 +42,11 @@ class ReceptionSearch extends Reception
      */
     public function search($params)
     {
-        $query = Reception::find();
+        if ($isAdmin) {        
+            $query = Reception::find()->where(['user_id' => Yii::$app->user->id]);;
+        } else {
+            $query = Reception::find();;
+        }
 
         // add conditions that should always apply here
 
